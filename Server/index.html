@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+
+                <!-- <div class="masthead clearfix">
+                    <div class="container inner">
+                        <h3 class="masthead-brand">Study</h3>
+                    </div>
+                </div> -->
+
+                <div class="inner cover">
+                    <h1 class="cover-heading">Introduction</h1>
+                    <p class="lead">
+                        We are conducting an academic study about decision-making algorithms. You will be asked to
+                        assess and provide your opinion on these algorithms.
+                        <br /><br />
+                        For example, an algorithm may discover that men are more likely to cause traffic accidents
+                        leading to serious injury. Based on this
+                        information, an insurance company may decide to increase the insurance prices for male drivers.
+                        <br /><br />
+                        We are interested in your opinion and motivation for assessing these algorithms in terms of
+                        fairness, accuracy, and comprehensibility. For this task, we make use of real-life datasets on
+                        recidivism and lending.
+                        <br /><br />
+                        Please ensure that your answers are detailed and honest. Thank you for your participation in
+                        this study.</p>
+                    <br />
+
+                    <div id="logos">
+                        <img src="img/aau.png" />
+                        <img src="img/oulu.png" />
+                        <img src="img/melbourne.png" />
+                    </div>
+
+                    <p><small class="text-muted">No identifying information will be collected as part of our research
+                            data, and while
+                            participation will involve the recording of your worker ID, this will be removed from the
+                            data
+                            immediately after download. We will therefore not be able to identify your particular
+                            responses
+                            in our data. Your answers and input will be analysed to determine whether the task was
+                            completed
+                            honestly - if dishonest
+                            input is detected we may withhold your payment.</small></p>
+
+                    <hr class="mb-4">
+
+                    <h2>Demographics</h2>
+                    <p class="lead">Please tell us a little bit about yourself.</p>
+
+                    <form class="needs-validation" novalidate>
+                        <div class="col-md-6 mb-3">
+                            <label for="age">Age</label>
+                            <input type="text" class="form-control" id="age" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                Valid age is required.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender">Sex</label>
+                            <select class="custom-select d-block w-100" id="sex" required>
+                                <option value="">Choose...</option>
+                                <option value="F">Female</option>
+                                <option value="M">Male</option>
+                                <option value="XX">Non-binary</option>
+                                <option value="X">Prefer not to disclose</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Valid sex is required.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="race">Race</label>
+                            <select class="custom-select d-block w-100" id="race" required>
+                                <option value="">Choose...</option>
+                                <option value="AA">African-American</option>
+                                <option value="A">Asian</option>
+                                <option value="C">Caucasian</option>
+                                <option value="H">Hispanic</option>
+                                <option value="NA">Native American</option>
+                                <option value="O">Other</option>
+                                <option value="X">Prefer not to disclose</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide your race.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="income">Income last year</label>
+                            <select class="custom-select d-block w-100" id="income" required>
+                                <option value="">Choose...</option>
+                                <option value="0">$0 - $19,999</option>
+                                <option value="20">$20,000 - $34,999</option>
+                                <option value="35">$35,000 - $49,999</option>
+                                <option value="50">$50,000 - $74,999</option>
+                                <option value="75">$75,000 - $100,000</option>
+                                <option value="100">$100,000+</option>
+                                <option value="X">Prefer not to disclose</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide your income.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="race">Highest level of education</label>
+                            <select class="custom-select d-block w-100" id="education" required>
+                                <option value="">Choose...</option>
+                                <option value="1">No formal education</option>
+                                <option value="2">Primary education</option>
+                                <option value="3">Secondary education or high school</option>
+                                <option value="4">Bachelor or vocational degree</option>
+                                <option value="5">Master's degree</option>
+                                <option value="6">Doctorate or higher</option>
+                                <option value="X">Prefer not to disclose</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide your highest level of education.
+                            </div>
+                        </div>
+
+
+                </div>
+                <!-- <hr class="mb-4"> -->
+                </form>
+
+                </br></br>
+
+                <!-- <h2>Begin study</h2> -->
+                <!-- <p class="lead">[Begin study button, randomly selecting one of the following conditions]</p> -->
+                <!-- <a href="#" class="btn btn-lg btn-default">Begin study (randomise condition?)</a> </br></br> -->
+                <!-- <a href="baseline.html" class="btn btn-lg btn-default">Cond 1: Baseline</a> </br></br> -->
+
+                <a href="background.html" class="btn btn-lg btn-default conditionlink">Begin study</a>
+
+                <!-- <a href="text-personal.html" class="btn btn-lg btn-default conditionlink">Condition 1: Local - Text</a>
+                <a href="text-comparison.html" class="btn btn-lg btn-default conditionlink">Condition 2: Global -
+                    Text</a> </br></br>
+
+                <a href="graph-personal.html" class="btn btn-lg btn-default conditionlink">Condition 3: Local -
+                    Graph</a>
+                <a href="graph-comparison.html" class="btn btn-lg btn-default conditionlink">Condition 4: Global -
+                    Graph</a></br></br>
+               
+
+                <a href="box-personal.html" class="btn btn-lg btn-default conditionlink">Condition 5: Local -
+                    Boxplot</a>
+                <a href="box-comparison.html" class="btn btn-lg btn-default conditionlink">Condition 6: Global -
+                    Boxplot</a> -->
+
+                </br></br>
+
+                <!-- <hr class="mb-4"> -->
+
+                <!-- <h4>Post condition</h4>
+                <a href="graphcomprehend.html" class="btn btn-lg btn-default">Graph comprehension</a> </br></br>
+                <a href="completion-survey.html" class="btn btn-lg btn-default">Completion survey</a> </br></br> -->
+
+
+                <hr class="mb-4">
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            // var params = { width: 1680, height: 1050 };
+            // var str = jQuery.param(params);
+            // $("#results").text(str);
+
+            var pID = urlParams["PROLIFIC_PID"];
+            var pSTUDY_ID = urlParams["STUDY_ID"];
+            var pSESSION_ID = urlParams["SESSION_ID"];
+
+            var ID = pID + "_" + pSTUDY_ID + "_" + pSESSION_ID;
+            // var randomID = 1 + Math.floor(Math.random() * 100000000);
+
+            var selectedAge = "";
+            var selectedSex = "";
+            var selectedRace = "";
+            var selectedIncome = "";
+            var selectedEducation = "";
+
+            $("#age").change(function () {
+                selectedAge = $("#age").val();
+            });
+            $("select#sex").change(function () {
+                selectedSex = $(this).children("option:selected").val();
+            });
+            $("select#race").change(function () {
+                selectedRace = $(this).children("option:selected").val();
+            });
+            $("select#income").change(function () {
+                selectedIncome = $(this).children("option:selected").val();
+            });
+            $("select#education").change(function () {
+                selectedEducation = $(this).children("option:selected").val();
+            });
+
+
+            $(".conditionlink").click(function (e) {
+                // alert($(this).attr('href'));
+                e.preventDefault();
+                var href = $(this).attr('href');
+
+                if (/Mobi|Android/i.test(navigator.userAgent)) {
+                    alert("Sorry, this task cannot be completed on your phone. Please open on a laptop or desktop computer to continue.")
+                } else {
+                    if (selectedAge != "" && selectedSex != "" && selectedRace != "" && selectedIncome != "" && selectedEducation != "") {
+                        var answerdata = [];
+                        var timestamp = Date.now();
+                        answerdata.push(ID, timestamp, "intro", selectedAge, selectedSex, selectedRace, selectedIncome, selectedEducation);
+
+                        // data: {bar: $("#bar").val()},
+                        $.post('savedata.php', { data: answerdata }, function (response) {
+                            // Log the response to the console
+                            console.log("Response: " + response);
+
+                            url = href + "?id=" + ID + "&a=" + selectedAge + "&s=" + selectedSex + "&r=" + selectedRace + "&i=" + selectedIncome + "&e=" + selectedEducation;
+                            window.location = url;
+                        });
+                    } else {
+                        alert("Please input all requested data");
+                        console.log("?a=" + selectedAge + "&s=" + selectedSex + "&r=" + selectedRace + "&i=" + selectedIncome + "&e=" + selectedEducation);
+                    }
+                }
+            })
+        });
+
+
+    </script>
+
+</body>

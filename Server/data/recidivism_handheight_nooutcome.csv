@@ -1,0 +1,7 @@
+"hand","height","mean","outcome"
+"Left-handed individuals","shorter than 5.5","29.8","nooutcome-recidivism"
+"Left-handed individuals","between 5.5 and 6.0","55.2","nooutcome-recidivism"
+"Left-handed individuals","taller than 6.5","83.9","nooutcome-recidivism"
+"Right-handed individuals","shorter than 5.5","22.5","nooutcome-recidivism"
+"Right-handed individuals","between 5.5 and 6.0","42.6","nooutcome-recidivism"
+"Right-handed individuals","taller than 6.5","72.1","nooutcome-recidivism"

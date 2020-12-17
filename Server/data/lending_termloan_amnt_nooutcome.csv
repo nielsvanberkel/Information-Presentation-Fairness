@@ -1,0 +1,7 @@
+"term","loan_amnt","mean","outcome"
+"36 month loans","below $12000","35.3","nooutcome-loan"
+"36 month loans","between $12000 - $24000","31.8","nooutcome-loan"
+"36 month loans","over $24000","37.0","nooutcome-loan"
+"60 month loans","below $12000","52.8","nooutcome-loan"
+"60 month loans","between $12000 - $24000","51.6","nooutcome-loan"
+"60 month loans","over $24000","54.6","nooutcome-loan"

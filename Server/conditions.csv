@@ -1,0 +1,6 @@
+dataset,var1,var2
+recidivism,race,age_cat
+recidivism,sex,age_cat
+recidivism,charge,juv_fel_count_cat
+recidivism,sex,nonjuvi_count_cat
+recidivism,hand,height

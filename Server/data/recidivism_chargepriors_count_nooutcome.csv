@@ -1,0 +1,7 @@
+"charge","mean","priors_count","outcome"
+"Individuals convicted of a Felony","36.7","0","nooutcome-recidivism"
+"Individuals convicted of a Felony","44.5","1 - 5","nooutcome-recidivism"
+"Individuals convicted of a Felony","65.7","5+","nooutcome-recidivism"
+"Individuals convicted of a Misdemeanor","27.3","0","nooutcome-recidivism"
+"Individuals convicted of a Misdemeanor","35.8","1 - 5","nooutcome-recidivism"
+"Individuals convicted of a Misdemeanor","62.3","5+","nooutcome-recidivism"

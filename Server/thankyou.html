@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+
+                <div class="inner cover">
+                    <h1 class="cover-heading">Task complete</h1>
+                    <p class="lead">Thank you for your time in completing this subtask - you can now close this page. Stay safe!</p>
+                    
+
+                    <!-- <span id="completion_code"></span> -->
+
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            // var pID = urlParams["id"];
+
+            // $("#completion_code").text(pID);
+        });
+    </script>
+</body>

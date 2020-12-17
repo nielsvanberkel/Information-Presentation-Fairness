@@ -1,0 +1,11 @@
+dataset,var1,var2
+recidivism,race,age
+recidivism,sex,age
+recidivism,charge,priors_count
+recidivism,violent,priors_count
+recidivism,hand,height
+lending,region,age
+lending,sex,age
+lending,term,loan_amnt
+lending,home_ownership,loan_amnt
+lending,vegetarian,weight

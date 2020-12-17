@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+                <div class="inner cover">
+                    <h1 class="cover-heading">Background</h1>
+                    <p class="lead">
+                        You will be shown a total of ten scenarios. Each scenario displays the effect of one parameter
+                        (for example
+                        'age') on the algorithm's risk calculation (for example 'risk of crashing a car').
+                        In each scenario you will be able to explore this risk calculation for a different set of groups
+                        (for example between males and females).
+                        <br /><br />
+                        Based on historical data of many people, algorithms determine which parameters (age, number of
+                        previous accidents, etc.) are useful
+                        in distinguishing between low- and high-risk individuals.
+                        <br /><br />
+                        In this task, you are asked to assess whether or not a parameter (for example 'age') should be
+                        included in an algorithm predicting a specified risk, as well as whether you believe it is fair
+                        to
+                        include this parameter. You will be asked to motivate your choices. Finally, we ask you to state
+                        whether you think the parameter would negatively effect on one (or more) of the shown groups as
+                        compared to the other group(s). For example - an algorithm that determines young drivers are
+                        more at risk may have a more negative effect on male drivers than on female drivers.
+                        <br /><br />
+
+                    </p>
+
+                    <p class="lead">Question 1.<br />Algorithms calculate the risk of an individual by;</p>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="background-q1" id="background-q1-1"
+                            value="1">
+                        <label class="form-check-label" for="background-q1-1">
+                            Asking family and friends of the individual to assess the risk of this person.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="background-q1" id="background-q1-2"
+                            value="2">
+                        <label class="form-check-label" for="background-q1-2">
+                            Determining the risk of individuals with a high level of similarity on the included
+                            parameters.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="background-q1" id="background-q1-3"
+                            value="3">
+                        <label class="form-check-label" for="background-q1-3">
+                            Selecting five individuals from a historical dataset at random and calculating the average.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="background-q1" id="background-q1-4"
+                            value="4">
+                        <label class="form-check-label" for="background-q1-4">
+                            Calculating the average risk of the entire dataset.
+                        </label>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <p class="lead">
+                        The algorithms presented in this study are based on two real datasets: one contains information
+                        on (the payback of) loans, the other contains information on reoffending criminal behaviour.
+                        <br /><br />
+                        Customers applying for a loan will either pay back the loan or fail to pay back their loan.
+                        Predicting whether someone will pay back their loan can be used to reject or approve a person's
+                        loan application or help determine the loan's interest rate.
+                        <br /><br />
+                        Individuals which are caught for a crime will either become reoffenders (this is known as
+                        recidivism) or non-reoffenders. Predicting whether someone becomes a reoffender can be used to
+                        adjust their sentence or the support receive during or after their sentence.
+                        <br /><br />
+                        
+
+                        <p class="lead">Question 2.<br />A recidivist is someone who;</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="background-q2" id="background-q2-1"
+                                value="21">
+                            <label class="form-check-label" for="background-q2-1">
+                                Is unable to pay back their loan.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="background-q2" id="background-q2-2"
+                                value="22">
+                            <label class="form-check-label" for="background-q2-2">
+                                Has committed a crime.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="background-q2" id="background-q2-3"
+                                value="23">
+                            <label class="form-check-label" for="background-q2-3">
+                                Is applying for a loan while under parole.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="background-q2" id="background-q2-4"
+                                value="24">
+                            <label class="form-check-label" for="background-q2-4">
+                                Commits a crime following an earlier conviction.
+                            </label>
+                        </div>
+                </div>
+                </form>
+
+                </br></br>
+
+                <a href="text-nooutcome.html" class="btn btn-lg btn-default conditionlink">Open first scenario</a>
+
+                </br></br>
+
+                <hr class="mb-4">
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            pID = urlParams["id"];
+            pAge = urlParams["a"];
+            pSex = urlParams["s"];
+            pRace = urlParams["r"];
+            pIncome = urlParams["i"];
+            pEducation = urlParams["e"];
+            results = "";
+
+            var selected = "";
+
+            $(".conditionlink").click(function (e) {
+                $('.form-check input:checked').each(function () {
+                    selected += ($(this).attr('id')) + ",";
+                });
+
+                // alert($(this).attr('href'));
+                e.preventDefault();
+                var href = $(this).attr('href');
+                if (selected != "") {
+                    var answerdata = [];
+                    var timestamp = Date.now();
+                    answerdata.push(pID, timestamp, "background", selected);
+
+                    // data: {bar: $("#bar").val()},
+                    $.post('savedata.php', { data: answerdata }, function (response) {
+                        // Log the response to the console
+                        console.log("Response: " + response);
+
+                        url = href + "?id=" + pID + "&a=" + pAge + "&s=" + pSex + "&r=" + pRace + "&i=" + pIncome + "&e=" + pEducation;
+                        window.location = url;
+                    });
+                } else {
+                    alert("Please input all requested data");
+                    console.log(href + "?id=" + pID + "&a=" + pAge + "&s=" + pSex + "&r=" + pRace + "&i=" + pIncome + "&e=" + pEducation);
+                }
+            })
+        });
+
+
+    </script>
+
+</body>

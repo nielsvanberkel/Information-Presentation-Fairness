@@ -1,0 +1,7 @@
+"violent","mean","priors_count","outcome"
+"Non-violent offences","31.4","0","nooutcome-recidivism"
+"Non-violent offences","40.5","1 - 5","nooutcome-recidivism"
+"Non-violent offences","63.1","5+","nooutcome-recidivism"
+"Violent offences","44.6","0","nooutcome-recidivism"
+"Violent offences","50.6","1 - 5","nooutcome-recidivism"
+"Violent offences","73.7","5+","nooutcome-recidivism"

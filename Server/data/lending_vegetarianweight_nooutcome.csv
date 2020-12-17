@@ -1,0 +1,7 @@
+"vegetarian","weight","mean","outcome"
+"Non-vegetarians","below 170","36.8","nooutcome-loan"
+"Non-vegetarians","between 170 and 190","39.7","nooutcome-loan"
+"Non-vegetarians","over 190","44.4","nooutcome-loan"
+"Vegetarians","below 170","36.7","nooutcome-loan"
+"Vegetarians","between 170 and 190","37.3","nooutcome-loan"
+"Vegetarians","over 190","45.1","nooutcome-loan"

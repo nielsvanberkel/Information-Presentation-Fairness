@@ -1,0 +1,87 @@
+<p><small class="text-muted">You are required to answer all questions. Please consider your answer and motivation carefully.</small>
+</p>
+
+<p class="lead">Should <span class="current-variable"></span> be included in an algorithm predicting the <span
+        class="current-scenario"></span>?</p>
+
+
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="include-vars" id="include-var-yes" value="yes-include">
+    <label class="form-check-label" for="include-var-yes">
+        Yes, <span class="current-variable"></span> should be included
+    </label>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="include-vars" id="include-var-no" value="no-include">
+    <label class="form-check-label" for="include-var-no">
+        No, <span class="current-variable"></span> should not be included
+    </label>
+</div>
+
+<br />
+
+<p class="lead">How confident are you in your decision whether <span class="current-variable"></span> should be included.</p>
+<p><small class="text-muted">0% = not at all confident, 100% = very confident</small></p>
+<div class="slider-container">
+    <input id="slider-confident" type="range" min="0" max="100">
+    <span id="confident-output" style="visibility: hidden;"><output></output>%</span>
+</div>
+
+<br /><br />
+
+<p class="lead">Please motivate your choice regarding the inclusion of <span class="current-variable"></span> in an algorithm predicting the <span
+    class="current-scenario"></span>.</p>
+<form class="needs-validation">
+    <div class="col-md-6 mb-3">
+        <textarea type="textarea" rows="4" class="form-control" id="include-text" placeholder="" value=""
+            required></textarea>
+    </div>
+</form>
+
+
+
+<br /><br />
+
+<p class="lead">Is it <em>fair</em> to include <span class="current-variable"></span> in an algorithm predicting the
+    <span class="current-scenario"></span>?</p>
+<p><small class="text-muted">0% = completely unfair, 100% = completely fair</small></p>
+<div class="slider-container">
+    <input id="slider-fair" type="range" min="0" max="100">
+    <span id="fair-output" style="visibility: hidden;"><output></output>%</span>
+</div>
+
+
+<br style="clear:both" />
+
+<p class="lead">Please motivate your choice in assessing the <em>fairness</em> of including <span
+        class="current-variable"></span>.</p>
+<form class="needs-validation">
+    <div class="col-md-6 mb-3">
+        <textarea type="textarea" rows="4" class="form-control" id="fair-text" placeholder="" value=""
+            required></textarea>
+    </div>
+</form>
+
+<p class="lead">Including <span class="current-variable"></span> in the algorithm would negatively affect the following
+    group(s):</p>
+
+<div id="groups-survey" class="form-check"></div>
+
+<script>
+    function resetSurveyInput() {
+        $('.form-check-input').val([]);
+        $('#include-text').val("");
+        $('input[type="range"]').val(50).change();
+        $('#fair-text').val("");
+    }    
+</script>
+
+<!-- <p class="lead">How could the <em>fairness</em> of this algorithm be improved?
+</p>
+
+<form class="needs-validation" novalidate>
+    <div class="col-md-6 mb-3">
+        <textarea type="textarea" rows="4" class="form-control" id="understand-text" placeholder="" value=""
+            required></textarea>
+    </div>
+</form> -->

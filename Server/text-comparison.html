@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/rangeslider.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+                <div class="inner cover">
+                    <h2>Task <span id="task-counter">1</span> / 10</h2>
+
+                    <h5 id="loading" style="display: none;">Loading new scenario.</h5>
+
+                    <div id="graph-content">
+
+                        <p class="lead" id="lead-1"></p>
+                        <p class="lead" id="lead-2"></p>
+                        <p class="lead" id="lead-3"></p>
+
+                        <br />
+
+                        <table style="width:100%">
+                            <tr>
+                                <th>
+                                    <h5 class="left-graph-header"></h5>
+                                </th>
+                                <th>
+                                    <h5 class="right-graph-header"></h5>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td id="reoffenders"></td>
+                                <td id="nonreoffenders"></td>
+                            </tr>
+                        </table>
+
+                        <br />
+                        <p><small>Data sampled from 5000 individuals.</small></p>
+
+                        <h6>Explore the data for:</h6>
+                        <div class="btn-group-toggle" id="graph-buttons" data-toggle="buttons">
+                        </div>
+
+                        <hr class="mb-4">
+
+                        <h3>Survey</h3>
+                        <div id="survey"></div>
+
+                        <br />
+
+                        <a href="#" class="btn btn-lg btn-default" id="next-btn">Next</a> </br></br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="js/rangeslider.min.js"></script>
+    <script src="js/shuffle.js"></script>
+    <script src="js/jquery.csv.min.js"></script>
+
+    <script src="js/filterData.js"></script>
+
+    <script>
+        var scenarios = ["recidivism", "lending"];
+        // var scenario = "lending";
+        var scenario;
+        var conditions;
+        var scenario_counter = 0;
+        var pID;
+        var pAge;
+        var pSex;
+        var pRace;
+        var pIncome;
+        var pEducation;
+        var results;
+
+        var condition = "text-comparison2";
+
+        var array;
+        var array_scenario = [];
+
+        var task_counter = 0;
+
+        var var_one;
+        var var_two;
+
+        var offset_x = [];
+        var offset_y = [];
+
+        scenarios = shuffle(scenarios);
+        scenario = scenarios[0];
+
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            pID = urlParams["id"];
+            pAge = urlParams["a"];
+            pSex = urlParams["s"];
+            pRace = urlParams["r"];
+            pIncome = urlParams["i"];
+            pEducation = urlParams["e"];
+            results = "";
+
+            if (offset_x.length == 0) {
+                for (let index = 0; index < 5000; index++) {
+                    offset_x.push(Math.random() - 0.5);
+                    offset_y.push(Math.random() - 0.95);
+                }
+            }
+
+            $.ajax({
+                url: "conditions_scatter.csv",
+                async: false,
+                success: function (csvd) {
+                    var items = $.csv.toObjects(csvd);
+                    conditions = items;
+                },
+                dataType: "text",
+                complete: function () {
+                    // call a function on complete
+                    assignCondition();
+                }
+            });
+
+            function assignCondition() {
+                array = Object.keys(conditions).map(function (key) {
+                    return [conditions[key]];
+                });
+
+                for (var i = 0; i < array.length; i++) {
+                    console.log(array[i][0].dataset);
+                    if (array[i][0].dataset == scenario) {
+                        array_scenario.push(array[i]);
+                    }
+                }
+            }
+
+            array_scenario = shuffle(array_scenario);
+            setText();
+        });
+
+
+
+        function setText() {
+            // update counter text
+            $("#task-counter").text(task_counter + 1);
+
+            if (scenario == "recidivism") {
+                // $("#lead-1").html("This algorithm predicts an individual's chance of reoffending after they have been caught for a crime (also known as recidivism).");
+                $("#lead-2").html("The information below show the relationship between an individual's <em><span class=current-variable></span></em> and their <em>predicted risk of recidivism</em>, as calculated at the time of their conviction.");
+                $("#lead-3").html("We split the data between individuals who ended up reoffending after two years (on the left) and those who did not reoffend (on the right).");
+                // "ByThe left graph shows individuals who did reoffend, the right graph shows individuals who did not reoffend.");
+            } else if (scenario == "lending") {
+                // $("#lead-1").html("This algorithm predicts an individual's chance of not paying back on a loan (also known as defaulting).");
+                $("#lead-2").html("The information below show the relationship between an individual's <em><span class=current-variable></span></em> and their <em>predicted risk of not paying back their loan</em>, as calculated at the time when signing up for the loan.");
+                $("#lead-3").html("We split the data between individuals who ended up not paying back their loan at the end of the term (on the left) and those who did pay back their loan at the end of the term (on the right).");
+                // $("#lead-3").html("The left graph shows individuals who did not pay back their loan, the right graph shows individuals who did pay back their loan.");
+            }
+
+            // update graph
+            var_one = array_scenario[scenario_counter][0]["var1"];
+            var_two = array_scenario[scenario_counter][0]["var2"];
+            console.log("var_one " + var_one);
+            console.log("var_two " + var_two);
+
+            loadData();
+        }
+
+        var first_view = true;
+
+        function loadData() {
+            first_view = true;
+            if (scenario == "recidivism") {
+                d3.csv("data/recidivism.csv").then(function (data) {
+                    $(".left-graph-header").html("Individuals who did reoffend");
+                    $(".right-graph-header").html("Individuals who did <em>not</em> reoffend");
+                    dataset = data;
+                    setButtons();
+                });
+            } else if (scenario == "lending") {
+                d3.csv("data/loans.csv").then(function (data) {
+                    $(".left-graph-header").html("Individuals who did <em>not</em> pay back their loan");
+                    $(".right-graph-header").html("Individuals who did pay back their loan");
+                    dataset = data;
+                    setButtons();
+                });
+            }
+        }
+
+        function extractColumn(arr, column) {
+            return arr.map(x => x[column])
+        }
+
+        var unique_var_ones = [];
+        var data_filter;
+        function setButtons(input) {
+            console.log("setButtons with input " + input);
+            unique_var_ones = [];
+            var_two_humanreadable = "";
+
+            if (var_two == "age") {
+                var_two_humanreadable = "Age";
+            } else if (var_two == "juv_fel_count") {
+                var_two_humanreadable = "Number of juvenile felonies";
+            } else if (var_two == "priors_count") {
+                var_two_humanreadable = "Number of prior convictions";
+            } else if (var_two == "height") {
+                var_two_humanreadable = "Height";
+            } else if (var_two == "loan_amnt") {
+                var_two_humanreadable = "Loan amount";
+            } else if (var_two == "weight") {
+                var_two_humanreadable = "Body weight";
+            } else if (var_two == "loan_amnt") {
+                var_two_humanreadable = "Loan amount";
+            }
+
+            // alert("var one = " + var_one);
+            // alert("var two = " + var_two);
+
+            data_filter = filterData(input, var_one, var_two, scenario);
+
+            $(".current-variable").text(var_two_humanreadable.toLowerCase());
+            if (scenario == "recidivism") {
+                $(".current-scenario").text("risk of recidivism");
+            } else if (scenario == "lending") {
+                $(".current-scenario").text("risk of not paying back on a loan");
+            }
+
+            $("#graph-buttons").html('');
+
+            unique_var_ones.forEach(element => {
+                if (input == element) {
+                    $("#graph-buttons").append('<label class="btn mr-1 btn-outline-primary active">' +
+                        '<input type="radio" name="options" autocomplete="off" value="' + element + '" ' +
+                        'onclick="drawGraph(\'' + element + '\')">' + element +
+                        '</label>');
+                } else {
+                    $("#graph-buttons").append('<label class="btn mr-1 btn-outline-primary">' +
+                        '<input type="radio" name="options" autocomplete="off" value="' + element + '" ' +
+                        'onclick="drawGraph(\'' + element + '\')">' + element +
+                        '</label>');
+                }
+            });
+
+            if (first_view == true) {
+                $("#groups-survey").html('');
+                unique_var_ones.forEach(element => {
+                    $("#groups-survey").append('<input class="form-check-input" type="checkbox" value="" name="' + element + '" id="checkbox-' + element + '">' +
+                        '<label class="form-check-label" for="checkbox-' + element + '">' +
+                        element + '</label><br/>');
+                });
+                $("#groups-survey").append('<input class="form-check-input" type="checkbox" value="" name="none" id="checkbox-none">' +
+                    '<label class="form-check-label" for="checkbox-none">None</label><br/>');
+
+
+                $("input[type='checkbox']").change(function () {
+                    if ($(this).attr("id") == "checkbox-none") {
+                        $('#groups-survey input:checked').each(function () {
+                            // selected += ($(this).attr('name')) + ",";
+                            $(this).prop("checked", false);
+                        });
+                        $(this).prop("checked", true);
+                    } else {
+                        $("#checkbox-none").prop("checked", false);
+                    }
+                });
+
+
+                if (var_one == "sex") {
+                    if (pSex == "M" || pSex == "X" || pSex == "XX") {
+                        $('input[value="Males"]').parent('label').addClass("active");
+                        drawGraph("Males");
+                    } else {
+                        $('input[value="Females"]').parent('label').addClass("active");
+                        drawGraph("Females");
+                    }
+                } else if (var_one == "race") {
+                    if (pRace == "AA" || pRace == "X") {
+                        $('input[value="African-Americans"]').parent('label').addClass("active");
+                        drawGraph("African-Americans");
+                    } else if (pRace == "A") {
+                        $('input[value="Asians"]').parent('label').addClass("active");
+                        drawGraph("Asians");
+                    } else if (pRace == "C") {
+                        $('input[value="Caucasians"]').parent('label').addClass("active");
+                        drawGraph("Caucasians");
+                    } else if (pRace == "H") {
+                        $('input[value="Hispanics"]').parent('label').addClass("active");
+                        drawGraph("Hispanics");
+                    } else if (pRace == "NA") {
+                        $('input[value="Native Americans"]').parent('label').addClass("active");
+                        drawGraph("Native Americans");
+                    } else if (pRace == "O") {
+                        $('input[value="Others"]').parent('label').addClass("active");
+                        drawGraph("Others");
+                    }
+                } else if (var_one == "charge") {
+                    $('input[value="Individuals convicted of a Felony"]').parent('label').addClass("active");
+                    drawGraph("Individuals convicted of a Felony");
+                } else if (var_one == "violent") {
+                    $('input[value="Non-violent offences"]').parent('label').addClass("active");
+                    drawGraph("Non-violent offences");
+                } else if (var_one == "hand") {
+                    $('input[value="Right-handed individuals"]').parent('label').addClass("active");
+                    drawGraph("Right-handed individuals");
+                } else if (var_one == "term") {
+                    $('input[value="36 month loans"]').parent('label').addClass("active");
+                    drawGraph("36 month loans");
+                } else if (var_one == "region") {
+                    $('input[value="US North Central inhabitants"]').parent('label').addClass("active");
+                    drawGraph("US North Central inhabitants");
+                } else if (var_one == "home_ownership") {
+                    $('input[value="Renters"]').parent('label').addClass("active");
+                    drawGraph("Renters");
+                } else if (var_one == "vegetarian") {
+                    $('input[value="Non-vegetarians"]').parent('label').addClass("active");
+                    drawGraph("Non-vegetarians");
+                }
+                first_view = false;
+            }
+        }
+
+        function drawGraph(input) {
+            $("#reoffenders").html("");
+            $("#nonreoffenders").html("");
+
+            // load dataframe
+            $.ajax({
+                url: "data/" + scenario + "_" + var_one + var_two + "_outcome.csv",
+                async: false,
+                success: function (csvd) {
+                    var items = $.csv.toObjects(csvd);
+                    jsonobject = items;
+                },
+                dataType: "text",
+                complete: function () {
+
+                    var variable = "";
+                    var pre = "The algorithm predicts that ";
+
+                    if (var_two == "age") {
+                        variable = " year olds";
+                    } else if (var_two == "priors_count") {
+                        variable = " prior convictions";
+                        pre += "persons with ";
+                    } else if (var_two == "juv_fel_count") {
+                        variable = " prior juvenile felonies";
+                        pre += "persons with ";
+                    } else if (var_two == "height") {
+                        variable = " foot";
+                        pre += "persons ";
+                    } else if (var_two == "loan_amnt") {
+                        variable = "";
+                        pre += "persons with a loan ";
+                    } else if (var_two == "weight") {
+                        variable = " lbs";
+                        pre += "persons ";
+                    } else {
+                        variable = "TODO + " + var_two;
+                    }
+
+                    console.log(jsonobject);
+                    console.log("COMPLETE var 1 - 2 - input" + var_one + var_two + input);
+
+                    for (var i = 0; i < jsonobject.length; i++) {
+                        console.log("jsonobject[i][var_one] " + jsonobject[i][var_one]);
+                        if (jsonobject[i][var_one] == input) {
+                            // console.log("typeof jsonobject[i][mean] + " + typeof Math.round(jsonobject[i]["mean"]));
+                            if (jsonobject[i]["mean"] != "NA") {
+                                mean_value = jsonobject[i]["mean"];
+                                // mean_value = Math.round(jsonobject[i]["mean"] * 10) / 10;
+                                if (jsonobject[i]["outcome"] == "Did reoffend") {
+                                    $("#reoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + " are at a predicted risk of recidivism of " + mean_value + "%<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Did not reoffend") {
+                                    $("#nonreoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + " are at a predicted risk of recidivism of " + mean_value + "%<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Negative") {
+                                    $("#reoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + " are at a predicted risk of not paying back of " + mean_value + "%<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Positive") {
+                                    $("#nonreoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + " are at a predicted risk of not paying back of " + mean_value + "%<br/><br/>");
+                                }
+                            } else {
+                                if (jsonobject[i]["outcome"] == "Did reoffend") {
+                                    $("#reoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + ": no data available<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Did not reoffend") {
+                                    $("#nonreoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + ": no data available<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Negative") {
+                                    $("#reoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + ": no data available<br/><br/>");
+                                } else if (jsonobject[i]["outcome"] == "Positive") {
+                                    $("#nonreoffenders").append(pre + jsonobject[i][var_two].toLowerCase() + variable + ": no data available<br/><br/>");
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            $("#loading").hide();
+            $("#graph-content").show();
+        }
+
+        function setSliders() {
+            var $sliderconfident = $('#slider-confident');
+            var $sliderconfidentoutput = $('#confident-output output');
+            $("#confident-output").css("visibility", "hidden");
+            $("#fair-output").css("visibility", "hidden");
+
+            $sliderconfident
+                .rangeslider({
+                    polyfill: false,
+                    onInit: function () {
+                        // $sliderconfidentoutput[0].innerHTML = this.value;
+                        $("#js-rangeslider-0 .rangeslider__fill").attr('style', 'visibility: hidden');
+                    }
+                })
+                .on('input', function (e) {
+                    $sliderconfidentoutput[0].innerHTML = e.currentTarget.value;
+                    if ($("#confident-output").css("visibility") == "hidden") {
+                        $("#confident-output").attr('style', 'visibility: visible');
+                        $("#js-rangeslider-0 .rangeslider__fill").attr('style', 'visibility: visible');
+                    }
+                })
+
+
+            var $sliderfair = $('#slider-fair');
+            var $sliderfairoutput = $('#fair-output output');
+
+            $sliderfair
+                .rangeslider({
+                    polyfill: false,
+                    onInit: function () {
+                        // $sliderfairoutput[0].innerHTML = this.value;
+                        $("#js-rangeslider-1 .rangeslider__fill").attr('style', 'visibility: hidden');
+                    }
+                })
+                .on('input', function (e) {
+                    $sliderfairoutput[0].innerHTML = e.currentTarget.value;
+                    if ($("#fair-output").css("visibility") == "hidden") {
+                        $("#fair-output").attr('style', 'visibility: visible');
+                        $("#js-rangeslider-1 .rangeslider__fill").attr('style', 'visibility: visible');
+                    }
+                })
+        }
+
+        $('#survey').load('includes/survey.html', function () {
+            setSliders();
+        });
+
+        $("#next-btn").click(function () {
+            var answerdata = [];
+            // var request;
+            var timestamp = Date.now();
+
+            var include = "";
+            if ($('#include-var-yes').is(":checked")) {
+                include = "yes";
+            } else if ($('#include-var-no').is(":checked")) {
+                include = "no";
+            }
+
+            var sliderconfidenceoutput = $('#confident-output').first().text();
+
+            var includetext = "";
+            includetext = $('#include-text').val();
+
+
+            var sliderfairoutput = $('#fair-output').first().text();
+
+            var fairtext = "";
+            fairtext = $('#fair-text').val();
+
+            var selected = "";
+            $('#groups-survey input:checked').each(function () {
+                selected += ($(this).attr('name')) + ",";
+            });
+
+            console.log("Answerdata");
+            answerdata.push(pID, timestamp, condition, scenario, var_one, var_two, include, sliderconfidenceoutput, includetext, sliderfairoutput, fairtext, selected);
+            console.log(answerdata);
+
+            // var slidersset = false;
+            // array.forEach(element => {
+
+            // });
+
+            if (include == "" || includetext == "" || sliderconfidenceoutput == "%" || sliderfairoutput == "%" || fairtext == "" || selected == "") {
+                alert("Please answer all the questions.")
+            } else {
+
+                // data: {bar: $("#bar").val()},
+                $.post('savedata.php', { data: answerdata }, function (response) {
+                    // Log the response to the console
+                    console.log("Response: " + response);
+
+                    $("#graph-content").hide();
+                    $("#loading").show();
+
+                    task_counter++;
+                    scenario_counter++;
+
+                    if (task_counter < 10) {
+                        resetSurveyInput();
+                        $("#js-rangeslider-0 .rangeslider__fill").attr('style', 'visibility: hidden');
+                        $("#js-rangeslider-1 .rangeslider__fill").attr('style', 'visibility: hidden');
+                        setSliders();
+
+                        if (task_counter == 5) {
+                            alert("Halfway there! We are now changing to a different scenario, please make sure to read the introduction text.");
+                            scenario_counter = 0;
+                            scenario = scenarios[1];
+
+                            // Reset array of scenarios and fill with other conditions
+                            array_scenario = [];
+
+                            for (var i = 0; i < array.length; i++) {
+                                console.log(array[i][0].dataset);
+                                if (array[i][0].dataset == scenario) {
+                                    array_scenario.push(array[i]);
+                                }
+                            }
+
+                            array_scenario = shuffle(array_scenario);
+                        }
+                        setText();
+                    } else {
+                        url = "completion-survey.html" + "?id=" + pID + "&a=" + pAge + "&s=" + pSex + "&r=" + pRace + "&i=" + pIncome + "&e=" + pEducation;
+                        window.location = url;
+                    }
+                });
+            }
+        });
+    </script>
+</body>

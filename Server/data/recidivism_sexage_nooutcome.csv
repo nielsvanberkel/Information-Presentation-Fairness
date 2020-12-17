@@ -1,0 +1,7 @@
+"sex","age","mean","outcome"
+"Females","Below 25","58.2","nooutcome-recidivism"
+"Females","25 - 45","40.5","nooutcome-recidivism"
+"Females","Over 45","21.7","nooutcome-recidivism"
+"Males","Below 25","58.4","nooutcome-recidivism"
+"Males","25 - 45","46.0","nooutcome-recidivism"
+"Males","Over 45","27.4","nooutcome-recidivism"

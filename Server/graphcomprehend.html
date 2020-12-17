@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/rangeslider.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+
+                <div class="inner cover">
+                    <h1 class="cover-heading">Survey 2/2</h1>
+                    <p class="lead">Please answer the following four questions.</p>
+
+                    <hr class="mb-4">
+
+                    <h4>Question 1</h4>
+                    <p class="lead">The graph below shows the percentage of people who die from different types of
+                        cancer.</p>
+
+                    <img class="comprehend-img" src="img/comp-graph-1.png" />
+
+                    <p class="lead">About what percentage of people who die from cancer die from cancer B, cancer C, and
+                        cancer D combined?</p>
+                    <p>Enter the <em>number</em> only.</p>
+
+                    <form class="needs-validation" novalidate>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" min="0" max="100" class="form-control" id="q1" placeholder="" value=""
+                                required>
+                            <div class="invalid-feedback">
+                                Please answer Q1.
+                            </div>
+                        </div>
+                    </form>
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+
+                    <h4>Question 2</h4>
+                    <p class="lead">You see two magazine advertisements on separate pages. Each advertisement is for a
+                        different drug for treating heart disease. Each advertisement has a graph showing the
+                        effectiveness of the drug compared to a placebo (sugar pill).</p>
+
+                    <img class="comprehend-img" src="img/comp-graph-2.png" />
+
+                    <p class="lead">Compared to the placebo, which treatment leads to a larger decrease in the
+                        percentage of patients who die?</p>
+
+                    <div class="col-md-6 mb-3">
+                        <select class="custom-select d-block w-100" id="q2" required>
+                            <option value="">Choose...</option>
+                            <option>Crosicol</option>
+                            <option>Hertinol</option>
+                            <option>They are equal</option>
+                            <option>Can't say</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please answer Q2.
+                        </div>
+                    </div>
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+
+                    <h4>Question 3</h4>
+                    <p class="lead">The graph below shows the number of men and women with disease X. The total number
+                        of circles is 100.</p>
+
+                    <img class="comprehend-img" src="img/comp-graph-3.png" />
+
+                    <p class="lead">How many more men than women are there among 100 patients with disease X?</p>
+                    <p>Enter the <em>number</em> only.</p>
+
+                    <form class="needs-validation" novalidate>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" min="0" max="1000000" class="form-control" id="q3" placeholder=""
+                                value="" required>
+                            <div class="invalid-feedback">
+                                Please answer Q3.
+                            </div>
+                        </div>
+                    </form>
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+
+                    <h4>Question 4</h4>
+                    <p class="lead">You see two newspaper advertisements on separate pages. Each advertisement is for a
+                        different treatment of a skin disease. Each advertisement has a graph showing the effectiveness
+                        of the treatment over time.</p>
+
+                    <img class="comprehend-img" src="img/comp-graph-4.png" />
+
+                    <p class="lead">Which of the treatments shows a larger decrease in the percentage of sick patients?
+                    </p>
+
+                    <div class="col-md-6 mb-3">
+                        <select class="custom-select d-block w-100" id="q4" required>
+                            <option value="">Choose...</option>
+                            <option>Apsoriatin</option>
+                            <option>Nopsorian</option>
+                            <option>They are equal</option>
+                            <option>Can't say</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please answer Q4.
+                        </div>
+                    </div>
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+
+                    <a href="#" id="next-btn" class="btn btn-lg btn-default">Submit</a> </br></br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            var pID = urlParams["id"];
+            var pAge = urlParams["a"];
+            var pSex = urlParams["s"];
+            var pRace = urlParams["r"];
+            var pIncome = urlParams["i"];
+            var pEducation = urlParams["e"];
+
+            $("#next-btn").click(function () {
+                var answerdata = [];
+                var request;
+                var timestamp = Date.now();
+
+                var q1 = $('#q1').val();
+                var q2 = $('#q2').val();
+                var q3 = $('#q3').val();
+                var q4 = $('#q4').val();
+
+                answerdata.push(pID, timestamp, "quiz", q1, q2, q3, q4);
+                console.log(answerdata);
+
+                if (q1 == "" || q2 == "" || q3 == "" || q4 == "") {
+                    alert("Please answer all the questions.")
+                } else {
+                    $.post('savedata.php', { data: answerdata }, function (response) {
+                        url = "feedback.html" + "?id=" + pID + "&a=" + pAge + "&s=" + pSex + "&r=" + pRace + "&i=" + pIncome + "&e=" + pEducation;
+                        window.location = url;
+                    });
+                }
+            });
+        });
+    </script>
+</body>

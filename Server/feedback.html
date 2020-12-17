@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <title>Fairness in algorithms</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/rangeslider.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+</head>
+
+<style type="text/css">
+    table {
+        width: 100%;
+    }
+
+    .tg {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .tg td {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        padding: 10px 5px;
+        border-style: solid;
+        border-width: 1px;
+        overflow: hidden;
+        word-break: normal;
+        border-color: black;
+        border: 0;
+    }
+
+    .tg th {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 10px 5px;
+        border-style: solid;
+        border-width: 1px;
+        overflow: hidden;
+        word-break: normal;
+        border-color: black;
+        width: 20%;
+        border: 0;
+    }
+
+    .tg .tg-cly1 {
+        text-align: left;
+        text-align: center;
+        vertical-align: middle
+    }
+</style>
+
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="container">
+
+                <div class="inner cover">
+                    <h1 class="cover-heading">Feedback</h1>
+                    <p class="lead">Please help us improve by telling us what you thought of this study.</p>
+
+                    <hr class="mb-4">
+
+                    <p class="lead">Was any aspect of the study unclear?</p>
+                    <form class="needs-validation">
+                        <div class="col-md-6 mb-3">
+                            <textarea type="textarea" rows="4" class="form-control" id="unclear-text" placeholder=""
+                                value="" required></textarea>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <p class="lead">Was there anything related to the fairness of algorithms that we missed in this
+                        study? Please comment freely.</p>
+                    <form class="needs-validation">
+                        <div class="col-md-6 mb-3">
+                            <textarea type="textarea" rows="4" class="form-control" id="fairness-text" placeholder=""
+                                value="" required></textarea>
+                        </div>
+                    </form>
+
+
+                    <br />
+                    <hr class="mb-4">
+                    <br />
+
+                    <a href="#" id="next-btn" class="btn btn-lg btn-default">Next</a> </br></br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        var urlParams;
+        (window.onpopstate = function () {
+            var match,
+                pl = /\+/g,  // Regex for replacing addition symbol with a space
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query = window.location.search.substring(1);
+
+            urlParams = {};
+            while ((match = search.exec(query)) !== null)
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
+        $(document).ready(function () {
+            var pID = urlParams["id"];
+            var pAge = urlParams["a"];
+            var pSex = urlParams["s"];
+            var pRace = urlParams["r"];
+            var pIncome = urlParams["i"];
+            var pEducation = urlParams["e"];
+
+            $("#next-btn").click(function () {
+                var answerdata = [];
+                var timestamp = Date.now();
+
+                var uncleartext = "";
+                uncleartext = $('#unclear-text').val();
+
+                var fairnesstext = "";
+                fairnesstext = $('#fairness-text').val();
+
+                console.log("Answerdata");
+                answerdata.push(pID, timestamp, "feedback", uncleartext, fairnesstext);
+                console.log(answerdata);
+
+
+                $.post('savedata.php', { data: answerdata }, function (response) {
+                    url = "complete.html";
+                    window.location = url;
+                });
+            });
+        });
+    </script>
+</body>

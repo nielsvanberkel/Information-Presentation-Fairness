@@ -1,0 +1,7 @@
+"sex","age","mean","outcome"
+"Females","Below 25","40.6","nooutcome-loan"
+"Females","25 - 45","39.3","nooutcome-loan"
+"Females","Over 45","36.2","nooutcome-loan"
+"Males","Below 25","42.0","nooutcome-loan"
+"Males","25 - 45","39.7","nooutcome-loan"
+"Males","Over 45","36.2","nooutcome-loan"
